@@ -10,11 +10,16 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\Models\Restaurant;
 
 Route::get('/', function () {
-    return view('welcome');
+    $restaurants = Restaurant::take(10)->get();
+    dd($restaurants);
+
+    return view('home', compact('restaurants'));
 });
+
+Route::resource('/restaurant', 'RestaurantController');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
