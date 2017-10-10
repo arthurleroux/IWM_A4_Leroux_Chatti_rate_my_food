@@ -15,7 +15,6 @@ class RestaurantController extends Controller
     public function index()
     {
         $restaurants = Restaurant::take(10)->get();
-        dd($restaurants);
         return view('restaurant.index', compact('restaurants'));
     }
 

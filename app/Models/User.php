@@ -26,4 +26,20 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Get the restaurants record associated with the user.
+     */
+    public function restaurants()
+    {
+        return $this->hasMany('App\Models\Restaurant');
+    }
+
+    /**
+     * Get the reviews record associated with the user.
+     */
+    public function reviews()
+    {
+        return $this->hasMany('App\Models\Review');
+    }
 }

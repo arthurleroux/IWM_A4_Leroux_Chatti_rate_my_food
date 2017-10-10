@@ -14,8 +14,7 @@ use App\Models\Restaurant;
 
 Route::get('/', function () {
     $restaurants = Restaurant::take(10)->get();
-    dd($restaurants);
-
+    //dd($restaurants);
     return view('home', compact('restaurants'));
 });
 
