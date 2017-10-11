@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class ProfileController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class ProfileController extends Controller
     {
         $users = User::all();
 
-        return view("profiles.index", compact('users'));
+        return view("users.index", compact('users'));
     }
 
     /**
@@ -59,7 +59,7 @@ class ProfileController extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**
@@ -71,7 +71,14 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $user = User::findOrFail($id);
+        $user->is_admin = $request->rights;
+        $user->save();
+
+        return redirect()->route('users.index');
+
+
     }
 
     /**
@@ -82,11 +89,13 @@ class ProfileController extends Controller
      */
     public function destroy($id)
     {
-        $profile = User::findOrFail($id);
+        $user = User::findOrFail($id);
+        $user->delete();
 
-        $profile->delete();
-
-        return redirect()->route('profile.index')->with('success', 'Le profil a bien été supprimé');
+        return redirect()->route('users.index');
     }
 
+//    public function test() {
+//
+//    }
 }

@@ -18,8 +18,10 @@ Route::get('/', function () {
     return view('home', compact('restaurants'));
 });
 
+//Route::get('/profile/test', 'ProfileController@test')->name('profil.test');
+
 Route::resource('/restaurant', 'RestaurantController');
-Route::resource('/profile', 'ProfileController');
+Route::resource('/users', 'UserController');
 
 Auth::routes();
 
