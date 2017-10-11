@@ -48,9 +48,9 @@ class RestaurantController extends Controller
      */
     public function store(Request $request)
     {
-        //$this->validate($request, [
-        //    'restaurant_img' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        //]);
+        $this->validate($request, [
+            'restaurant_img' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
 
         $restaurants = new Restaurant;
 
