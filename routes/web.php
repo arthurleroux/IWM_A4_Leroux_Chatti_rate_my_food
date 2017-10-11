@@ -18,7 +18,7 @@ Route::get('/', function () {
     return view('home', compact('restaurants'));
 });
 
-//Route::get('/profile/test', 'ProfileController@test')->name('profil.test');
+Route::put('/users/change_rights/{id}', 'UserController@changeRights')->name('changeRights');
 
 Route::resource('/restaurant', 'RestaurantController');
 Route::resource('/users', 'UserController');

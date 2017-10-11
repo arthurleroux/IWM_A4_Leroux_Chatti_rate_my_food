@@ -48,7 +48,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::findOrFail($id);
+        return view('users.show', compact('user'));
     }
 
     /**
@@ -59,7 +60,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-
+        $user = User::findOrFail($id);
+        return view('users.edit', compact('user'));
     }
 
     /**
@@ -71,14 +73,16 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255',
+        ]);
 
         $user = User::findOrFail($id);
-        $user->is_admin = $request->rights;
-        $user->save();
+        $input = $request->input();
+        $user->fill($input)->save();
 
-        return redirect()->route('users.index');
-
-
+        return redirect()->back();
     }
 
     /**
@@ -92,10 +96,14 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
 
-        return redirect()->route('users.index');
+        return redirect()->back();
     }
 
-//    public function test() {
-//
-//    }
+    public function changeRights(Request $request, $id) {
+        $user = User::findOrFail($id);
+        $user->is_admin = $request->rights;
+        $user->save();
+
+        return redirect()->back();
+    }
 }

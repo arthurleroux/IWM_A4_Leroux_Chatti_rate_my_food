@@ -23,7 +23,7 @@
                         <td>
                             {!! Form::model($user,
                                 array(
-                                    'route' => array('users.update', $user->id),
+                                    'route' => array('changeRights', $user->id),
                                     'method' => 'PUT')
                                 )
                             !!}
