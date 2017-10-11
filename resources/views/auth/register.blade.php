@@ -39,6 +39,21 @@
                             </div>
                         </div>
 
+                        <div class="form-group">
+                            <label for="is-restorer" class="col-md-4 control-label">Je suis : </label>
+
+                            <div class="col-md-6">
+                                <input type="radio" name="is_restorer" value="0" checked>
+                                <label for="is-restorer">Un client</label>
+
+                                <br>
+
+                                <input type="radio" name="is_restorer" value="1">
+                                <label for="is-restorer">Un restaurateur</label>
+
+                            </div>
+                        </div>
+
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             <label for="password" class="col-md-4 control-label">Password</label>
 
