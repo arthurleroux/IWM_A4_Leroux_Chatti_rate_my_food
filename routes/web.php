@@ -19,6 +19,7 @@ Route::get('/', function () {
 });
 
 Route::resource('/restaurant', 'RestaurantController');
+Route::resource('/profile', 'ProfileController');
 
 Auth::routes();
 
