@@ -9,6 +9,7 @@ use MercurySeries\Flashy\Flashy;
 
 class UserController extends Controller
 {
+    
     /**
      * Display a listing of the resource.
      *
@@ -84,6 +85,7 @@ class UserController extends Controller
         $input = $request->input();
         $user->fill($input)->save();
 
+        Flashy::success('Modification du profil effectuée');
         return redirect()->back();
     }
 
@@ -98,6 +100,7 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
 
+        Flashy::success('Suppression effectuée');
         return redirect()->back();
     }
 

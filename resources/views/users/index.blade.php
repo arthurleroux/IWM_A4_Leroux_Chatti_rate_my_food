@@ -12,6 +12,7 @@
                         <td><b>Type de profil</b></td>
                         <td><b>Droits</b></td>
                         <td></td>
+                        <td></td>
                     </tr>
                     @foreach($users as $user)
                     <tr>
@@ -44,6 +45,13 @@
                                 <i class="fa fa-trash" aria-hidden="true"></i>
                             </button>
                             {!! Form::close() !!}
+                        </td>
+                        <td>
+                            <a href="{{ route('users.edit', $user->id) }}">
+                                <button class="btn btn-default">
+                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                </button>
+                            </a>
                         </td>
                     </tr>
                     @endforeach

@@ -17,10 +17,10 @@ class isRestaurant
     public function handle($request, Closure $next)
     {
         if(Auth::check()
-            && Auth::user()->is_restaurant === 1) {
+            && Auth::user()->is_restaurant === 0) {
             return $next($request);
         }
 
-        return redirect('home');
+        return redirect('/');
     }
 }

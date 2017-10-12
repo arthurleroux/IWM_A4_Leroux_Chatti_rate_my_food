@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
-                @if(Auth::check() && Auth::user()->id == $user->id)
+                @if(Auth::check() && (Auth::user()->id === $user->id) || (Auth::user()->is_admin === 1))
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4>Effectuer des modifications</h4>
@@ -58,7 +58,11 @@
 
                             <br>
 
-                            <a href="{{ route('users.show', $user->id) }}">Retourner sur le profil</a>
+                            @if(Auth::user()->id === $user->id)
+                                <a href="{{ route('users.show', $user->id) }}">Retourner sur mon profil</a>
+                            @elseif(Auth::user()->is_admin === 1)
+                                <a href="{{ route('users.index') }}">Retourner sur la liste des utilisateurs</a>
+                            @endif
                         </div>
                     </div>
                 @endif
