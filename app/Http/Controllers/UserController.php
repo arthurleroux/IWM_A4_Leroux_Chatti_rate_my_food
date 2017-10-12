@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use MercurySeries\Flashy\Flashy;
 
 class UserController extends Controller
 {
@@ -104,6 +105,8 @@ class UserController extends Controller
         $user->is_admin = $request->rights;
         $user->save();
 
+
+        Flashy::success('Modification des droits effectuée');
         return redirect()->back();
     }
 }
