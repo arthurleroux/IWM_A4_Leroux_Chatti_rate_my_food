@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
+use MercurySeries\Flashy\Flashy;
 
 class isAdmin
 {
@@ -17,10 +18,11 @@ class isAdmin
     public function handle($request, Closure $next)
     {
 
-        if(Auth::check() && Auth::user()->is_Admin) {
+        if(Auth::check() && Auth::user()->is_admin === 1) {
             return $next($request);
         }
 
+        Flashy::error('Opération non autorisée');
         return redirect('/');
     }
 }

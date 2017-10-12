@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
-                @if(Auth::check() && Auth::user()->id == $user->id)
+                @if(Auth::check() && (Auth::user()->id === $user->id) || (Auth::user()->is_admin === 1))
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4>Modifier mon profil</h4>

@@ -6,13 +6,12 @@
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
 
-                @if(Auth::check() && Auth::user()->id == $user->id)
+                @if(Auth::check() && (Auth::user()->id === $user->id) || (Auth::user()->is_admin === 1))
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h4>Mes informations</h4>
                         </div>
                         <div class="panel-body">
-
 
                             <div class="form-horizontal">
 
@@ -47,7 +46,6 @@
 
                             </div>
 
-
                             {!! Form::model($user,
                                 array(
                                     'route' => array('users.destroy', $user->id),
@@ -56,7 +54,7 @@
 
 
                             <div class="text-center">
-                                <a class="btn btn-warning" href="{{ route('users.edit', $user->id) }}">Modifier profil</a>
+                                <a class="btn btn-warning" href="{{ route('users.edit', $user->id) }}">Modifier mon profil</a>
 
                                 {!! Form::submit('Supprimer mon profil', ['class' => 'btn btn-danger']) !!}
                             </div>
