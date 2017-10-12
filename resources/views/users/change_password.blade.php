@@ -7,13 +7,13 @@
                 @if(Auth::check() && Auth::user()->id == $user->id)
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h4>Effectuer des modifications</h4>
+                            <h4>Modifier mon profil</h4>
                         </div>
                         <div class="panel-body">
 
                             {!! Form::model($user,
                             array(
-                            'route' => array('users.update', $user->id),
+                            'route' => array('edit_password', $user->id),
                             'method' => 'PUT',
                             'class' => 'form-horizontal'
                             )) !!}
@@ -24,7 +24,8 @@
                                 ]) !!}
                                 <div class="col-md-5">
                                     {!! Form::text('name', old('name'), [
-                                    'class' => 'form-control'
+                                    'class' => 'form-control',
+                                'readonly' => 'readonly'
                                     ])
                                 !!}
                                 </div>
@@ -36,6 +37,30 @@
                                 ]) !!}
                                 <div class="col-md-5">
                                     {!! Form::email('email', old('email'), [
+                                    'class' => 'form-control',
+                                'readonly' => 'readonly'
+                                    ])
+                                !!}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                {!! Form::label('password', 'Nouveau mot de passe', [
+                                'class' => 'col-md-4 control-label'
+                                ]) !!}
+                                <div class="col-md-5">
+                                    {!! Form::password('password', [
+                                    'class' => 'form-control'
+                                    ])
+                                !!}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                {!! Form::label('password_confirmation', 'Confirmer nouveau mot de passe', [
+                                'class' => 'col-md-4 control-label'
+                                ]) !!}
+                                <div class="col-md-5">
+                                    {!! Form::password('password_confirmation',  [
                                     'class' => 'form-control'
                                     ])
                                 !!}
@@ -49,12 +74,6 @@
                             </div>
 
                             {!! Form::close() !!}
-
-                            <br>
-
-                            <div class="text-center">
-                                <a href="{{ route('change_password', $user->id) }}">Modifier mot de passe</a>
-                            </div>
 
                             <br>
 

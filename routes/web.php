@@ -11,6 +11,7 @@
 |
 */
 use App\Models\Restaurant;
+use App\Models\User;
 
 Route::get('/', function () {
     $restaurants = Restaurant::take(10)->get();
@@ -18,7 +19,13 @@ Route::get('/', function () {
     return view('home', compact('restaurants'));
 });
 
-Route::put('/users/change_rights/{id}', 'UserController@changeRights')->name('changeRights');
+Route::get('/users/change_password/{id}', function($id) {
+    $user = User::findOrFail($id);
+    return view('users.change_password', compact('user'));
+})->name('change_password');
+
+Route::put('/users/change_rights/{id}', 'UserController@changeRights')->name('change_rights');
+Route::put('/users/edit_password/{id}', 'UserController@editPassword')->name('edit_password');
 
 Route::resource('/restaurant', 'RestaurantController');
 Route::resource('/users', 'UserController');

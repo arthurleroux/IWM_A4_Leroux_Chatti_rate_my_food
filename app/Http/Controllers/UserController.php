@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use MercurySeries\Flashy\Flashy;
 
 class UserController extends Controller
@@ -108,5 +109,19 @@ class UserController extends Controller
 
         Flashy::success('Modification des droits effectuée');
         return redirect()->back();
+    }
+
+    public function editPassword(Request $request, $id) {
+        $this->validate($request, [
+            'password' => 'required|confirmed|min:6',
+        ]);
+
+        $user = User::findOrFail($id);
+        $input = $request->input();
+        $input['password'] = Hash::make($request->password);
+        $user->fill($input)->save();
+
+        Flashy::success('Modification du mot de passe effectuée');
+        return view('users.show', compact('user'));
     }
 }

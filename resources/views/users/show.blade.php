@@ -13,40 +13,40 @@
                         </div>
                         <div class="panel-body">
 
-                            {!! Form::model($user,
-                            array(
-                            'route' => array('users.update', $user->id),
-                            'method' => 'PUT',
-                            'class' => 'form-horizontal'
-                            )) !!}
 
-                            <div class="form-group">
-                                {!! Form::label('name', 'Nom', [
-                                'class' => 'col-md-4 control-label',
-                                ]) !!}
-                                <div class="col-md-5">
-                                    {!! Form::text('name', old('name'), [
-                                    'class' => 'form-control',
-                                    'readonly' => 'readonly'
-                                    ])
-                                !!}
+                            <div class="form-horizontal">
+
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Nom</label>
+                                    <div class="col-md-5">
+                                        <input type="text" class="form-control" readonly value="{{ $user->name }}">
+                                    </div>
                                 </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Adresse email</label>
+                                    <div class="col-md-5">
+                                        <input type="text" class="form-control" readonly value="{{ $user->email }}">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Type de compte*</label>
+                                    <div class="col-md-5">
+                                        <input type="text" class="form-control" readonly value="{{ ($user->is_restaurant ? 'Restaurateur' : 'Client') }}">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Type de compte*</label>
+                                    <div class="col-md-5">
+                                        <input type="text" class="form-control" readonly value="{{ ($user->is_admin ? 'Administrateur' : 'Classique') }}">
+                                    </div>
+                                </div>
+                                * : non modifiable
+
                             </div>
 
-                            <div class="form-group">
-                                {!! Form::label('email', 'Adresse email', [
-                                'class' => 'col-md-4 control-label'
-                                ]) !!}
-                                <div class="col-md-5">
-                                    {!! Form::email('email', old('email'), [
-                                    'class' => 'form-control',
-                                    'readonly' => 'readonly'
-                                    ])
-                                !!}
-                                </div>
-                            </div>
-
-                            {!! Form::close() !!}
 
                             {!! Form::model($user,
                                 array(
@@ -56,7 +56,7 @@
 
 
                             <div class="text-center">
-                                <a class="btn btn-warning" href="{{ route('users.edit', Auth::user()->id) }}">Modifier mon profil</a>
+                                <a class="btn btn-warning" href="{{ route('users.edit', $user->id) }}">Modifier profil</a>
 
                                 {!! Form::submit('Supprimer mon profil', ['class' => 'btn btn-danger']) !!}
                             </div>
