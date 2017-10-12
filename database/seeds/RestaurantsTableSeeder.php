@@ -17,14 +17,14 @@ class RestaurantsTableSeeder extends Seeder
         $faker = Faker::create();
 
         $users = User::where('is_restaurant', 1)->get();
-        $all_users = [];
+        $users_id = [];
         foreach($users as $user) {
-            array_push($all_users, $user->id);
+            array_push($users_id, $user->id);
         }
 
-        for($i = 1; $i <= 10; $i++){
+        for($i = 1; $i <= 5; $i++){
             Restaurant::create([
-                'user_id' => $faker->randomElement($all_users),
+                'user_id' => $faker->randomElement($users_id),
                 'name' => $faker->company,
                 'status' => "pending",
                 'address' => $faker->address,
