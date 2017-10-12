@@ -36,6 +36,13 @@
                             {!! Form::close() !!}
                         </td>
                         <td>
+                            <a href="{{ route('users.edit', $user->id) }}">
+                                <button class="btn btn-default">
+                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                </button>
+                            </a>
+                        </td>
+                        <td>
                             {!! Form::model($user,
                                 array(
                                     'route' => array('users.destroy', $user->id),
@@ -45,13 +52,6 @@
                                 <i class="fa fa-trash" aria-hidden="true"></i>
                             </button>
                             {!! Form::close() !!}
-                        </td>
-                        <td>
-                            <a href="{{ route('users.edit', $user->id) }}">
-                                <button class="btn btn-default">
-                                    <i class="fa fa-pencil" aria-hidden="true"></i>
-                                </button>
-                            </a>
                         </td>
                     </tr>
                     @endforeach
