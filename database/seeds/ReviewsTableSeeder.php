@@ -34,6 +34,7 @@ class ReviewsTableSeeder extends Seeder
                 'user_id' => $faker->randomElement($users_id),
                 'restaurant_id' => $faker->randomElement($restaurants_id),
                 'status' => "pending",
+                'comment' => $faker->text($maxNbChars = 200),
                 'price' => $faker->numberBetween(10,20),
                 'rating' => $faker->numberBetween(1,5)
             ]);
