@@ -18,6 +18,7 @@ Route::get('/', function () {
     return view('home', compact('restaurants'));
 });
 
+Route::post('/restaurant/add_picture', 'RestaurantController@add_picture')->name('add_picture');
 Route::resource('/restaurant', 'RestaurantController');
 
 Auth::routes();

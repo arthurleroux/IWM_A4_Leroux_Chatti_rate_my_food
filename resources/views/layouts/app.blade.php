@@ -10,6 +10,9 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    <!-- Plugins -->
+    <link rel="stylesheet" href="{{ asset('css/timepicker.min.css') }}">
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
@@ -72,32 +75,25 @@
         </nav>
 
         @yield('content')
+
     </div>
 
     <script
             src="https://code.jquery.com/jquery-3.2.1.min.js"
             integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-            crossorigin="anonymous"></script>
+            crossorigin="anonymous">
+    </script>
+
+
+
+    @include('flashy::message')
+
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            function readURL(input) {
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
+    <!-- Plugins -->
+    <script src="{{ asset('js/dist/timepicker.js') }}"></script>
 
-                    reader.onload = function (e) {
-                        $('#restaurant_img_tag').attr('src', e.target.result);
-                    };
-                    reader.readAsDataURL(input.files[0]);
-                }
-            }
-            $("#restaurant_img").change(function(){
-                readURL(this);
-            });
-        })
-    </script>
 </body>
 </html>
