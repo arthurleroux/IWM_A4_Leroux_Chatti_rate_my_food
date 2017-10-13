@@ -11,6 +11,8 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
+    <!-- Plugins -->
+    <link rel="stylesheet" href="{{ asset('css/timepicker.min.css') }}">
 
 
     <!-- Styles -->
@@ -81,6 +83,7 @@
         </nav>
 
         @yield('content')
+
     </div>
 
     <script
@@ -89,9 +92,14 @@
             crossorigin="anonymous">
     </script>
 
+
     @include('flashy::message')
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+
+    <!-- Plugins -->
+    <script src="{{ asset('js/dist/timepicker.js') }}"></script>
+
 </body>
 </html>

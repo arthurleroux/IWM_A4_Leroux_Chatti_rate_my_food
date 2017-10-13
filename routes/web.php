@@ -19,6 +19,7 @@ Route::get('/', function () {
     return view('home', compact('restaurants'));
 });
 
+Route::post('/restaurant/add_picture', 'RestaurantController@add_picture')->name('add_picture');
 Route::get('/users/change_password/{id}', function($id) {
     $user = User::findOrFail($id);
     return view('users.change_password', compact('user'));

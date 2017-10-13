@@ -26,13 +26,13 @@ class RestaurantsTableSeeder extends Seeder
             Restaurant::create([
                 'user_id' => $faker->randomElement($users_id),
                 'name' => $faker->company,
+                'description' => $faker->text($maxNbChars = 200),
                 'status' => "pending",
                 'address' => $faker->address,
                 'city' => $faker->city,
                 'zip_code' => "92000",
                 'average_price' => $faker->numberBetween(10,20),
                 'average_rate' => $faker->numberBetween(0,10),
-                'opening_time' => $faker->numberBetween(0,14)
             ]);
         }
 
