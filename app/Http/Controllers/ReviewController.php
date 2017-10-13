@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Review;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use MercurySeries\Flashy\Flashy;
 
 class ReviewController extends Controller
 {
@@ -37,17 +39,21 @@ class ReviewController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'title' => 'required',
-            'content' => 'required'
+            'price' => 'required',
+            'rating' => 'required',
+            'comment' => 'required'
         ]);
 
-        $post = new Review;
+        $review = new Review;
         $input = $request->input();
         $input['user_id'] = Auth::user()->id;
+        $input['restaurant_id'] = 1;
+        $input['status'] = 'pending';
 
-        $post->fill($input)->save();
+        $review->fill($input)->save();
 
-        return redirect()->route('post.index')->with('success', 'Votre article a bien été crée');
+        Flashy::success('Votre commentaire a bien été pris en compte');
+        return redirect()->back();
     }
 
     /**
@@ -58,7 +64,12 @@ class ReviewController extends Controller
      */
     public function show($id)
     {
-        //
+        $review = Review::findOrFail($id);
+        $user = User::findOrFail($review->user_id);
+
+
+        return view('reviews.show', compact('review', 'user'));
+
     }
 
     /**
