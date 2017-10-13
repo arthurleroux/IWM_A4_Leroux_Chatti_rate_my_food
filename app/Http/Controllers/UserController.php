@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Restaurant;
+use App\Models\Review;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -59,7 +61,15 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
-        return view('users.show', compact('user'));
+        $reviews = Review::where('user_id',  $user->id)->get();
+        if ($user->is_restaurant == 1) {
+            $restaurants = Restaurant::where('user_id', $user->id)->get();
+            return view('users.show', compact('user', 'reviews', 'restaurants'));
+        }
+        else {
+            return view('users.show', compact('user', 'reviews'));
+        }
+
     }
 
     /**
