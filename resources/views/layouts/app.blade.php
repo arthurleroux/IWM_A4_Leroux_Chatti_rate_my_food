@@ -10,8 +10,10 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
     <!-- Plugins -->
     <link rel="stylesheet" href="{{ asset('css/timepicker.min.css') }}">
+
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -49,12 +51,18 @@
                             <li><a href="{{ route('login') }}">Login</a></li>
                             <li><a href="{{ route('register') }}">Register</a></li>
                         @else
+                            @if(Auth::user()->is_admin === 1)
+                                <li><a href="{{ route('users.index') }}">Users</a></li>
+                            @endif
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
+                                    <li>
+                                        <a href="{{ route('users.show', Auth::user()->id) }}">Mon profil</a>
+                                    </li>
                                     <li>
                                         <a href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
@@ -85,9 +93,7 @@
     </script>
 
 
-
     @include('flashy::message')
-
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
