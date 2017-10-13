@@ -29,6 +29,7 @@ Route::put('/users/edit_password/{id}', 'UserController@editPassword')->name('ed
 
 Route::resource('/restaurant', 'RestaurantController');
 Route::resource('/users', 'UserController');
+Route::resource('/reviews', 'ReviewController');
 
 Auth::routes();
 
