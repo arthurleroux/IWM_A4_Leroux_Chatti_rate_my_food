@@ -67,7 +67,6 @@ class ReviewController extends Controller
         $review = Review::findOrFail($id);
         $user = User::findOrFail($review->user_id);
 
-
         return view('reviews.show', compact('review', 'user'));
 
     }
@@ -80,7 +79,8 @@ class ReviewController extends Controller
      */
     public function edit($id)
     {
-        //
+        $review = Review::findOrFail($id);
+        return view('reviews.edit', compact('review'));
     }
 
     /**
@@ -92,7 +92,20 @@ class ReviewController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $this->validate($request, [
+            'price' => 'required',
+            'rating' => 'required',
+            'comment' => 'required'
+        ]);
+
+        $review = Review::findOrFail($id);
+        $input = $request->input();
+        $review->fill($input)->save();
+
+        Flashy::success('Le commentaire a bien été modifié');
+        return redirect()->back();
+
     }
 
     /**
@@ -103,6 +116,10 @@ class ReviewController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $review = Review::findOrFail($id);
+        $review->delete();
+
+        Flashy::success('Commentaire supprimé');
+        return redirect('/');
     }
 }

@@ -52,12 +52,16 @@
 
 
                         <div class="text-center">
-                            <a class="btn btn-warning" href="{{ route('users.edit', $user->id) }}">Modifier mon profil</a>
+                            <a class="btn btn-warning" href="{{ route('users.edit', $user->id) }}">Modifier profil</a>
 
                             {!! Form::submit('Supprimer mon profil', ['class' => 'btn btn-danger']) !!}
                         </div>
 
                         {!! Form::close() !!}
+
+                        @if(Auth::user()->is_admin === 1)
+                        <a href="{{ route('users.index') }}">Retourner sur la liste des utilisateurs</a>
+                        @endif
                     </div>
                 </div>
             </div>
