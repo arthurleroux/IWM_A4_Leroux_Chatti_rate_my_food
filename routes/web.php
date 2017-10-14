@@ -19,7 +19,6 @@ Route::get('/', function () {
     return view('home', compact('restaurants'));
 });
 
-Route::post('/restaurant/add_picture', 'RestaurantController@add_picture')->name('add_picture');
 Route::get('/users/change_password/{id}', function($id) {
     $user = User::findOrFail($id);
     return view('users.change_password', compact('user'));
@@ -27,6 +26,8 @@ Route::get('/users/change_password/{id}', function($id) {
 
 Route::put('/users/change_rights/{id}', 'UserController@changeRights')->name('change_rights');
 Route::put('/users/edit_password/{id}', 'UserController@editPassword')->name('edit_password');
+
+Route::post('/restaurant/add_picture/{id}', 'RestaurantController@add_picture')->name('add_picture');
 
 Route::resource('/restaurant', 'RestaurantController');
 Route::resource('/users', 'UserController');

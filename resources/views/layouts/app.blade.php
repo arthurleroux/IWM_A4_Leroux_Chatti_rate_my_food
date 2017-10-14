@@ -100,6 +100,5 @@
 
     <!-- Plugins -->
     <script src="{{ asset('js/dist/timepicker.js') }}"></script>
-
 </body>
 </html>

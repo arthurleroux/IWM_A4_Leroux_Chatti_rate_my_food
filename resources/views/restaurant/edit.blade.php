@@ -31,6 +31,8 @@
                                 'class' => ''
                             ])
                         !!}
+                            <input type="hidden" id="restaurant_id" data-restaurant_id="{{$restaurant->id}}">
+
                             @include('restaurant.partials.form')
                             @include('restaurant.partials.opening_time')
 
@@ -51,27 +53,7 @@
                     <div class="panel-heading"> Photos </div>
 
                     <div class="panel-body">
-                        <div class="form-group{{ $errors->has('restaurant_img') ? ' has-error' : '' }}">
-                            {{ Form::label('restaurant_img', 'Photo du restaurant', ['class' => 'col-md-4 control-label']) }}
-
-                            <div class="col-md-6">
-                                <div class="file-drop-area">
-                                    <span class="fake-btn">Choose files</span>
-                                    <span class="file-msg js-set-number">or drag and drop files here</span>
-                                    {{ Form::file('add_picture', ['class' => 'file-input', 'multiple' => 'multiple']) }}
-                                </div>
-
-                                @if ($errors->has('restaurant_img'))
-                                    <p class="help-block">
-                                        <span class="help-block">
-                                            <strong>{{ $errors->first('restaurant_img') }}</strong>
-                                        </span>
-                                    </p>
-                                @endif
-                            </div>
-                            <div class="col-md-12 all__pictures"></div>
-
-                        </div>
+                        @include('restaurant.partials.picture_upload')
                     </div>
                 </div>
             </div>
