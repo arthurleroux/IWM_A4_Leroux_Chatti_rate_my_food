@@ -16,6 +16,11 @@ use MercurySeries\Flashy\Flashy;
 
 class RestaurantController extends Controller
 {
+
+    public function __construct() {
+        $this->middleware('editRestaurant')->only('edit', 'update');
+        $this->middleware('isRestaurant')->only('create', 'store');
+    }
     /**
      * Create a new controller instance.
      *
@@ -89,14 +94,10 @@ class RestaurantController extends Controller
 
         $restaurants = new Restaurant;
 
-        $restaurants->user_id = Auth::user()->id;
-        $restaurants->name = $request->name;
-        $restaurants->description = $request->description;
-        $restaurants->address = $request->address;
-        $restaurants->city = $request->city;
-        $restaurants->zip_code = $request->zip_code;
+        $input = $request->input();
+        $input['user_id'] = Auth::user()->id;
 
-        $restaurants->save();
+        $restaurants->fill($input)->save();
 
         if ($request->hasFile('restaurant_img')) {
             $picture = new Picture;
@@ -116,6 +117,7 @@ class RestaurantController extends Controller
         }
 
         Flashy::success('Restaurant ajouté avec succès', 'http://your-awesome-link.com');
+
         return redirect()->route('restaurant.index');
     }
 
@@ -128,6 +130,7 @@ class RestaurantController extends Controller
     public function show($id)
     {
         $restaurant = Restaurant::findOrFail($id);
+
         return view('restaurant.show', compact('restaurant'));
     }
 
@@ -141,59 +144,14 @@ class RestaurantController extends Controller
     {
         $restaurant = Restaurant::find($id);
         $days = Day::All();
+        $opening_days = Opening_time::where('restaurant_id', $id)->get();
         $pictures = Picture::where('restaurant_id', $restaurant->id)->get();
 
-        return view('restaurant.edit', compact('restaurant', 'days', 'pictures'));
+        return view('restaurant.edit', compact('restaurant', 'days', 'pictures', 'opening_days'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function edit_opening_time($request, $id)
     {
-        $messages = [
-            'name.require' => 'Le nom du restaurant est obligatoire',
-            'name.max' => 'Le nom est trop long',
-            'description.required' => 'La description du restaurant est obligatoire',
-            'description.max' => 'La desciption est trop longue',
-            'address.required' => 'L\'adresse est obligatoire',
-            'city.required' => 'La ville est obligatoire',
-            'zip_code.required' => 'Le code postal est obligatoire',
-        ];
-
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'name' => 'required|max:255',
-                'description' => 'required|max:500',
-                'address' => 'required',
-                'city' => 'required',
-                'zip_code' => 'required',
-            ],
-            $messages
-        );
-
-        if ($validator->fails()) {
-            Flashy::error("Une erreur s'est produite", 'http://your-awesome-link.com');
-
-            return back()->withErrors($validator)->withInput();
-        }
-
-        $restaurants = new Restaurant;
-
-        $restaurants->user_id = Auth::user()->id;
-        $restaurants->name = $request->name;
-        $restaurants->description = $request->description;
-        $restaurants->address = $request->address;
-        $restaurants->city = $request->city;
-        $restaurants->zip_code = $request->zip_code;
-
-        $restaurants->save();
-
         $count = Opening_time::where('restaurant_id', $id)->count();
 
         $times = [
@@ -257,6 +215,57 @@ class RestaurantController extends Controller
 
             $opening_time->insert($times);
         };
+
+        return true;
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $messages = [
+            'name.require' => 'Le nom du restaurant est obligatoire',
+            'name.max' => 'Le nom est trop long',
+            'description.required' => 'La description du restaurant est obligatoire',
+            'description.max' => 'La desciption est trop longue',
+            'address.required' => 'L\'adresse est obligatoire',
+            'city.required' => 'La ville est obligatoire',
+            'zip_code.required' => 'Le code postal est obligatoire',
+        ];
+
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required|max:255',
+                'description' => 'required|max:500',
+                'address' => 'required',
+                'city' => 'required',
+                'zip_code' => 'required',
+            ],
+            $messages
+        );
+
+        if ($validator->fails()) {
+            Flashy::error("Une erreur s'est produite", 'http://your-awesome-link.com');
+
+            return back()->withErrors($validator)->withInput();
+        }
+
+        $restaurants = Restaurant::find($id);
+
+        $input = $request->input();
+        $input['user_id'] = Auth::user()->id;
+
+        $restaurants->fill($input)->save();
+
+        $this->edit_opening_time($request, $restaurants->id);
+
+        Flashy::success('Modifications enregistrées avec succès', 'http://your-awesome-link.com');
 
         return redirect()->back();
     }

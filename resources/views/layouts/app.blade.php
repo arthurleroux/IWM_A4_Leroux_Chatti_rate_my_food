@@ -14,9 +14,11 @@
     <!-- Plugins -->
     <link rel="stylesheet" href="{{ asset('css/timepicker.min.css') }}">
 
-
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+
 </head>
 <body>
     <div id="app">
@@ -92,7 +94,6 @@
             crossorigin="anonymous">
     </script>
 
-
     @include('flashy::message')
 
     <!-- Scripts -->
@@ -100,5 +101,6 @@
 
     <!-- Plugins -->
     <script src="{{ asset('js/dist/timepicker.js') }}"></script>
+    <script src="{{ asset('js/dist/materialize.min.js') }}"></script>
 </body>
 </html>

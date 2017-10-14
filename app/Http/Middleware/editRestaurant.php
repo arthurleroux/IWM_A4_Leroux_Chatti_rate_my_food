@@ -2,10 +2,12 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Restaurant;
 use Closure;
 use Illuminate\Support\Facades\Auth;
+use MercurySeries\Flashy\Flashy;
 
-class isRestaurant
+class editRestaurant
 {
     /**
      * Handle an incoming request.
@@ -16,11 +18,18 @@ class isRestaurant
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::check()
-            && Auth::user()->is_restaurant === 1) {
+        $id = $request->route()->parameter('restaurant');
+
+        $restaurant = Restaurant::findOrFail($id);
+
+        if (Auth::check()
+            && (Auth::user()->id == $restaurant->id)
+            || (Auth::user()->is_admin === 1)
+        ) {
             return $next($request);
         }
 
+        Flashy::error('Opération non autorisée');
         return redirect('/');
     }
 }
