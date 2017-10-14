@@ -14,7 +14,7 @@ use App\Models\Restaurant;
 use App\Models\User;
 
 Route::get('/', function () {
-    $restaurants = Restaurant::take(10)->get();
+    $restaurants = Restaurant::all()->random(3);
     //dd($restaurants);
     return view('home', compact('restaurants'));
 });

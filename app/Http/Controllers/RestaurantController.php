@@ -7,7 +7,6 @@ use App\Models\Opening_time;
 use App\Models\Picture;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
@@ -105,10 +104,12 @@ class RestaurantController extends Controller
             $image = $request->file('restaurant_img');
             $name = time().'.'.$image->getClientOriginalExtension();
             $destinationPath = public_path('/restaurants_pictures/'. $restaurants->name .'_'. $restaurants->id);
+
+            $path = '/restaurants_pictures/'. $restaurants->name .'_'. $restaurants->id .'/'.$name;
             $image->move($destinationPath, $name);
 
             $picture->restaurant_id = $restaurants->id;
-            $picture->path = $destinationPath;
+            $picture->path = $path;
 
             $picture->save();
         } else {
