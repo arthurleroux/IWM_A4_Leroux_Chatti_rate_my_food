@@ -1,6 +1,6 @@
 <div class="panel panel-default">
     <div class="panel-heading text-center">
-        <a data-toggle="collapse" href="#review" aria-expanded="false" aria-controls="collapseExample">
+        <a data-toggle="collapse" href="#review" aria-expanded="false" aria-controls="review">
             Laisser un avis
         </a>
     </div>

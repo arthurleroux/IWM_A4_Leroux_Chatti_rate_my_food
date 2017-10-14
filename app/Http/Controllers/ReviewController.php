@@ -63,10 +63,8 @@ class ReviewController extends Controller
      */
     public function show($id)
     {
-        $review = Review::findOrFail($id);
-        $user = User::findOrFail($review->user_id);
 
-        return view('reviews.show', compact('review', 'user'));
+        return view('reviews.show');
 
     }
 
@@ -120,5 +118,10 @@ class ReviewController extends Controller
 
         Flashy::success('Commentaire supprimé');
         return redirect()->back();
+    }
+
+    public function moderation() {
+
+        return view('reviews.moderation');
     }
 }

@@ -25,6 +25,9 @@ Route::get('/users/change_password/{id}', function($id) {
     return view('users.change_password', compact('user'));
 })->name('change_password');
 
+Route::get('/admin', 'UserController@admin')->name('admin');
+Route::get('/reviews/moderation', 'ReviewController@moderation')->name('reviews.moderatioo');
+
 Route::put('/users/change_rights/{id}', 'UserController@changeRights')->name('change_rights');
 Route::put('/users/edit_password/{id}', 'UserController@editPassword')->name('edit_password');
 

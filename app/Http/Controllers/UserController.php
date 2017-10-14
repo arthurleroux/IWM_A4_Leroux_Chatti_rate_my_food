@@ -61,7 +61,10 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
-        $reviews = Review::where('user_id',  $user->id)->get();
+        $reviews = Review::where([
+                ['user_id', $user->id],
+                ['status', 'accepted']
+        ])->get();
         if ($user->is_restaurant == 1) {
             $restaurants = Restaurant::where('user_id', $user->id)->get();
             return view('users.show', compact('user', 'reviews', 'restaurants'));
@@ -144,4 +147,13 @@ class UserController extends Controller
         Flashy::success('Modification du mot de passe effectuée');
         return view('users.show', compact('user'));
     }
+
+    public function admin() {
+
+        $reviews_pending = Review::where('status', 'pending')->get();
+        $reviews_rejected = Review::where('status', 'rejected')->get();
+
+        return view('users.admin', compact('reviews_pending', 'reviews_rejected'));
+    }
+
 }

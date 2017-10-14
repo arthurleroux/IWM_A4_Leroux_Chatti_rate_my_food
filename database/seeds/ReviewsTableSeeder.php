@@ -29,11 +29,11 @@ class ReviewsTableSeeder extends Seeder
             array_push($restaurants_id, $restaurant->id);
         }
 
-        for($i = 1; $i <= 10; $i++){
+        for($i = 1; $i <= 50; $i++){
             Review::create([
                 'user_id' => $faker->randomElement($users_id),
                 'restaurant_id' => $faker->randomElement($restaurants_id),
-                'status' => "pending",
+                'status' => $faker->randomElement(['pending', 'accepted', 'rejected']),
                 'comment' => $faker->text($maxNbChars = 200),
                 'price' => $faker->numberBetween(1,5),
                 'rating' => $faker->numberBetween(1,5)
