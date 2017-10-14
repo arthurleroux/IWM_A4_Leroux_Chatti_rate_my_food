@@ -41,13 +41,12 @@ class ReviewController extends Controller
         $this->validate($request, [
             'price' => 'required',
             'rating' => 'required',
-            'comment' => 'required'
+            'comment' => 'required',
+            'restaurant_id' => 'required'
         ]);
 
         $review = new Review;
         $input = $request->input();
-        $input['user_id'] = Auth::user()->id;
-        $input['restaurant_id'] = 1;
         $input['status'] = 'pending';
 
         $review->fill($input)->save();
@@ -120,6 +119,6 @@ class ReviewController extends Controller
         $review->delete();
 
         Flashy::success('Commentaire supprimé');
-        return redirect('/');
+        return redirect()->back();
     }
 }

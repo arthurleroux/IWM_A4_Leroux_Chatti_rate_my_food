@@ -7,7 +7,7 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h4>Mes informations</h4>
+                        Mes informations
                     </div>
                     <div class="panel-body">
 
@@ -67,51 +67,21 @@
 
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h4>Mes commentaires</h4>
+                        Mes commentaires
                     </div>
                     <div class="panel-body">
-                        @foreach($reviews as $review)
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    Restaurant : {{ $review->restaurant->name }}
-                                    <br>
-                                    {{ $review->updated_at }}
+                        @if(count($user->reviews) > 0)
+                            @foreach($reviews as $review)
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        Restaurant : <a href="{{ route('restaurant.show', $review->restaurant->id) }}">{{ $review->restaurant->name }}</a>
+                                        <br>
+                                        {{ $review->updated_at }}
+                                    </div>
+                                    @include('reviews.show')
                                 </div>
-                                <div class="panel-body">
-                                    Note : {{ $review->rating }}/5
-                                    <br>
-                                    Prix : {{ $review->price }}/5
-                                    <br>
-                                    <br>
-                                    {{ $review->comment }}
-                                    <br>
-                                    <br>
-                                    <br>
-                                    @if(Auth::check() && (Auth::user()->is_admin === 1) || (Auth::user()->id === $review->user_id))
-
-                                        <div class="col-md-1">
-                                            <a href="{{ route('reviews.edit', $review->id) }}">
-                                                <button class="btn btn-default">
-                                                    <i class="fa fa-pencil" aria-hidden="true"></i>
-                                                </button>
-                                            </a>
-                                        </div>
-
-                                        <div class="col-md-1">
-                                            {!! Form::model($review,
-                                                    array(
-                                                        'route' => array('reviews.destroy', $review->id),
-                                                        'method' => 'DELETE'))
-                                                !!}
-                                            <button class="btn btn-danger" type="submit">
-                                                <i class="fa fa-trash" aria-hidden="true"></i>
-                                            </button>
-                                            {!! Form::close() !!}
-                                        </div>
-                                    @endif
-                                </div>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        @endif
                     </div>
                 </div>
 
@@ -124,7 +94,7 @@
                             @foreach($restaurants as $restaurant)
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        {{ $restaurant->name }}
+                                        <a href="{{ route('restaurant.show', $restaurant->id) }}">{{ $restaurant->name }}</a>
                                     </div>
                                     <div class="panel-body">
 

@@ -1,49 +1,45 @@
-@extends('layouts.app')
+<div class="panel panel-default">
+    <div class="panel-heading text-center">
+        <a data-toggle="collapse" href="#review" aria-expanded="false" aria-controls="collapseExample">
+            Laisser un avis
+        </a>
+    </div>
+    <div class="collapse" id="review">
+        <div class="panel-body">
+            {!! Form::open(array(
+                'route' => 'reviews.store',
+                'method' => 'POST'
+                )) !!}
 
-@section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4>Commentaire</h4>
-                    </div>
+            {{ Form::hidden('restaurant_id', $restaurant->id) }}
+            {{ Form::hidden('user_id', Auth::user()->id) }}
 
-                    <div class="panel-body">
-                        {!! Form::open(array(
-                        'route' => 'reviews.store',
-                        'method' => 'POST'
-                        )) !!}
-
-                        <div class="form-group">
-                            {!! Form::label('rating', 'Note :') !!}
-                            {!! Form::selectRange('rating', 0, 5) !!}
-                        </div>
-
-                        <div class="form-group">
-                            {!! Form::label('price', 'Prix :') !!}
-                            {!! Form::selectRange('price', 0, 5) !!}
-                        </div>
-
-                        <div class="form-group">
-                            {!! Form::label('comment', 'Commentaire') !!}
-                            {!! Form::textarea('comment', '', [
-                                'class' => 'form-control',
-                                'placeholder' => 'Mon commentaire'
-                                ])
-                            !!}
-                        </div>
-
-                        <div class="text-center">
-                            {!! Form::submit('Envoyer commentaire',
-                                ['class' => 'btn btn-primary'])
-                            !!}
-                        </div>
-
-                        {!! Form::close() !!}
-                    </div>
-                </div>
+            <div class="form-group">
+                {!! Form::label('rating', 'Note (/5) :') !!}
+                {!! Form::selectRange('rating', 0, 5) !!}
             </div>
+
+            <div class="form-group">
+                {!! Form::label('price', 'Prix (/5) :') !!}
+                {!! Form::selectRange('price', 0, 5) !!}
+            </div>
+
+            <div class="form-group">
+                {!! Form::label('comment', 'Commentaire :') !!}
+                {!! Form::textarea('comment', '', [
+                    'class' => 'form-control',
+                    'placeholder' => 'Mon commentaire'
+                    ])
+                !!}
+            </div>
+
+            <div class="text-center">
+                {!! Form::submit('Envoyer commentaire',
+                    ['class' => 'btn btn-primary'])
+                !!}
+            </div>
+
+            {!! Form::close() !!}
         </div>
     </div>
-@endsection
+</div>

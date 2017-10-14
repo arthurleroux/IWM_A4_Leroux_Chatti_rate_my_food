@@ -19,10 +19,10 @@ class RestaurantController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+//    public function __construct()
+//    {
+//        $this->middleware('auth');
+//    }
 
     /**
      * Display a listing of the resource.
@@ -124,7 +124,8 @@ class RestaurantController extends Controller
      */
     public function show($id)
     {
-        //
+        $restaurant = Restaurant::findOrFail($id);
+        return view('restaurant.show', compact('restaurant'));
     }
 
     /**
