@@ -116,12 +116,23 @@ class ReviewController extends Controller
         $review = Review::findOrFail($id);
         $review->delete();
 
-        Flashy::success('Commentaire supprimé');
+        Flashy::success('Avis supprimé');
         return redirect()->back();
     }
 
     public function moderation() {
 
         return view('reviews.moderation');
+    }
+
+    public function changeStatus(Request $request, $id) {
+
+        $review = Review::findOrFail($id);
+        $review->status = $request->status;
+        $review->save();
+
+
+        Flashy::success('Statut changé avec succès');
+        return redirect()->back();
     }
 }

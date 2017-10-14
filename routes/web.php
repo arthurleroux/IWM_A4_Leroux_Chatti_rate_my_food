@@ -27,6 +27,7 @@ Route::get('/users/change_password/{id}', function($id) {
 
 Route::get('/admin', 'UserController@admin')->name('admin');
 Route::get('/reviews/moderation', 'ReviewController@moderation')->name('reviews.moderatioo');
+Route::put('/reviews/change_status/{id}', 'ReviewController@changeStatus')->name('reviews.change_status');
 
 Route::put('/users/change_rights/{id}', 'UserController@changeRights')->name('change_rights');
 Route::put('/users/edit_password/{id}', 'UserController@editPassword')->name('edit_password');
