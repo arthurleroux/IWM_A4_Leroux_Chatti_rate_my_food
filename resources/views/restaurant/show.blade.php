@@ -3,13 +3,20 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="panel panel-default">
-                <div class="panel-heading">
+            <div class="col-sm-12">
+                <h4>
                     {{ $restaurant->name }}
-                </div>
-                <div class="panel-body">
+                </h4>
+            </div>
+
+            <div class="col s4">
+                <p>
                     {{ $restaurant->description }}
-                </div>
+                </p>
+            </div>
+            <div class="col s8">
+                <!-- Slider main container -->
+                @include('restaurant.partials.slider')
             </div>
         </div>
         <div class="row">
@@ -30,7 +37,8 @@
                                         <div class="col-md-5">
                                             {{ $review->updated_at }}
                                         </div>
-                                        @if(Auth::check() && (Auth::user()->is_admin === 1) || (Auth::user()->id === $review->user_id))
+                                        @if(Auth::check() && (Auth::user()->is_admin === 1) || Auth::check() && (Auth::user()->id ===
+                                        $review->user_id))
                                             <div class="col-md-1">
                                                 <a href="{{ route('reviews.edit', $review->id) }}">
                                                     <button class="btn btn-default">
@@ -55,8 +63,13 @@
                                 @include('reviews.show')
                             </div>
                         @endforeach
+                    @else
+                        <p>Ce restaurant n'a aucune notes</p>
                     @endif
-                    @include('reviews.create')
+
+                    @if(Auth::check())
+                        @include('reviews.create')
+                    @endif
                 </div>
             </div>
         </div>

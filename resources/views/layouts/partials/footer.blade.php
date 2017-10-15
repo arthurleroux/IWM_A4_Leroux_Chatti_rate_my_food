@@ -3,6 +3,7 @@
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         crossorigin="anonymous">
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.0.1/js/swiper.min.js"></script>
 
 @include('flashy::message')
 
@@ -12,5 +13,6 @@
 <!-- Plugins -->
 <script src="{{ asset('js/dist/timepicker.js') }}"></script>
 <script src="{{ asset('js/dist/materialize.min.js') }}"></script>
+
 </body>
 </html>

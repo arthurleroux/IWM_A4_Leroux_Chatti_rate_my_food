@@ -131,8 +131,9 @@ class RestaurantController extends Controller
     public function show($id)
     {
         $restaurant = Restaurant::findOrFail($id);
+        $pictures = Picture::where('restaurant_id', $id)->get();
 
-        return view('restaurant.show', compact('restaurant'));
+        return view('restaurant.show', compact('restaurant', 'pictures'));
     }
 
     /**
