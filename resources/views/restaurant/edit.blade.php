@@ -37,7 +37,7 @@
                             @include('restaurant.partials.opening_time')
 
                             <div class="form-group">
-                                <div class="col-md-6 col-md-offset-4">
+                                <div class="col s12 center-align">
                                     <button type="submit" class="btn btn-primary">
                                         Enregistrer les modifications
                                     </button>

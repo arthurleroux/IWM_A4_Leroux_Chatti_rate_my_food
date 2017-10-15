@@ -283,15 +283,15 @@ class RestaurantController extends Controller
         $restaurant = Restaurant::find($id);
 
         //get the base-64 from data
-        $base64_str = substr($request->image, strpos($request->image, ",")+1);
+        $base64_str = substr($request->image, strpos($request->image, ",") + 1);
 
         //decode base64 string
         $image = base64_decode($base64_str);
-        $picture_name = 'restaurant_' . $id . '_'.time().'.png';
+        $picture_name = 'restaurant_' . $id . '_' . time() . '.png';
         $destinationPath = public_path('restaurants_pictures/' . $restaurant->name . '_' . $id);
         $path = public_path('restaurants_pictures/' . $restaurant->name . '_' . $id . '/' . $picture_name);
 
-        if (File::isDirectory($destinationPath)){
+        if (File::isDirectory($destinationPath)) {
             Image::make($image)->save($path);
         } else {
             File::makeDirectory($destinationPath, 0777, true, true);
@@ -305,7 +305,7 @@ class RestaurantController extends Controller
 
         $picture->save();
 
-        if ($image){
+        if ($image) {
             return response()->json([
                 'status' => 200,
                 'response' => 'Photo enregistrée avec succès'
@@ -316,6 +316,17 @@ class RestaurantController extends Controller
                 'response' => 'Erreur lors de l\'enregistration de la photo'
             ]);
         }
+    }
+
+    public function delete_picture($id)
+    {
+        $picture = Picture::findOrFail($id);
+
+        $picture->delete();
+
+        Flashy::success('Photo supprimée avec succès', 'http://your-awesome-link.com');
+
+        return redirect()->back();
     }
 
     /**

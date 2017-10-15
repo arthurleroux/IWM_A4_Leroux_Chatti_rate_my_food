@@ -32,6 +32,7 @@ Route::put('/users/change_rights/{id}', 'UserController@changeRights')->name('ch
 Route::put('/users/edit_password/{id}', 'UserController@editPassword')->name('edit_password');
 
 Route::post('/restaurant/add_picture/{id}', 'RestaurantController@add_picture')->name('add_picture');
+Route::delete('/restaurant/delete_picture/{id}', 'RestaurantController@delete_picture')->name('delete_picture');
 
 Route::resource('/restaurant', 'RestaurantController');
 Route::resource('/users', 'UserController');

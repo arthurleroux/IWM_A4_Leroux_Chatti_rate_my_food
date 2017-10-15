@@ -20,11 +20,16 @@
 <div class="row">
     <div class="col-md-12 all__pictures"></div>
     <div class="col-md-12 current__pictures">
+        <hr>
         @foreach($pictures as $picture)
-            <div class="col-md-4">
-                <form action="">
-                    <button type="submit"><i class="fa fa-times" aria-hidden="true"></i></button>
-                </form>
+            <div class="col-md-4 current__pictures-div">
+                {!! Form::open([
+                    'method' => 'DELETE',
+                    'route' => ['delete_picture', $picture->id],
+                    'class' => 'form-horizontal delete__picture-form'
+                ]) !!}
+                    <button class="delete__picture-btn" type="submit"><i class="fa fa-times" aria-hidden="true"></i></button>
+                {!! Form::close() !!}
                 <img src="{{ asset($picture->path) }}" class="img-responsive"/>
             </div>
         @endforeach

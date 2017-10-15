@@ -8351,7 +8351,7 @@ button.close {
 }
 
 .file-drop-area {
-  border: 1px dashed #7c7db3;
+  border: 1px dashed #ec6f75;
   border-radius: 3px;
   position: relative;
   width: 450px;
@@ -8363,17 +8363,19 @@ button.close {
 }
 
 .file-drop-area.is-active {
-  background-color: #3F4069;
+  background-color: #ec6f75;
+  color: white;
 }
 
 .fake-btn {
-  background-color: #3F4069;
-  border: 1px solid #9E9EC4;
+  background-color: #ec6f75;
+  border: 1px solid #ec6f75;
   border-radius: 3px;
   padding: 8px 15px;
   margin-right: 8px;
   font-size: 12px;
   text-transform: uppercase;
+  color: white;
 }
 
 .file-msg {
@@ -8403,11 +8405,11 @@ button.close {
 
 .restaurant__cards-link {
   text-decoration: none;
-  color: grey;
+  color: white;
 }
 
 .restaurant__cards-link:hover {
-  color: grey;
+  color: white;
   text-decoration: none;
   cursor: pointer;
 }
@@ -8415,6 +8417,10 @@ button.close {
 .card {
   position: relative;
   height: 500px;
+}
+
+.card .card-content {
+  color: grey;
 }
 
 .card .card-image {
@@ -8434,6 +8440,38 @@ button.close {
   background-color: #ec6f75;
   color: white;
   line-height: 50px;
+}
+
+.input-field {
+  margin-top: 0 !important;
+}
+
+.input-field .time_start,
+.input-field .time_end {
+  height: 30px !important;
+}
+
+.current__pictures {
+  margin-top: 15px;
+}
+
+.current__pictures .current__pictures-div {
+  margin-top: 10px;
+}
+
+.delete__picture-form .delete__picture-btn {
+  background-color: whitesmoke;
+  border: 0;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  color: #ec6f75;
+  position: absolute;
+  top: -8px;
+  right: 7px;
+  margin: 0;
+  padding: 0;
+  line-height: 20px;
 }
 
 .slider_class {

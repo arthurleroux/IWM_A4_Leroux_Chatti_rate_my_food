@@ -1,5 +1,5 @@
 .file-drop-area {
-  border: 1px dashed lighten($background, 30%);
+  border: 1px dashed $background;
   border-radius: 3px;
   position: relative;
   width: 450px;
@@ -9,17 +9,19 @@
   transition: 0.2s;
   &.is-active {
     background-color: $background--light;
+    color: white;
   }
 }
 
 .fake-btn {
-  background-color: #3F4069;
-  border: 1px solid #9E9EC4;
+  background-color: $background;
+  border: 1px solid $background;
   border-radius: 3px;
   padding: 8px 15px;
   margin-right: 8px;
   font-size: 12px;
   text-transform: uppercase;
+  color: white;
 }
 
 .file-msg {
@@ -48,11 +50,11 @@
 
 .restaurant__cards-link {
   text-decoration: none;
-  color: grey;
+  color: white;
 
   &:hover
   {
-    color: grey;
+    color: white;
     text-decoration:none;
     cursor:pointer;
   }
@@ -61,6 +63,10 @@
 .card {
   position: relative;
   height: 500px;
+
+  .card-content {
+    color: grey;
+  }
 
   .card-image {
     height: 50%;
@@ -79,5 +85,38 @@
     background-color: #ec6f75;
     color: white;
     line-height: 50px;
+  }
+}
+
+.input-field {
+  margin-top: 0 !important;
+
+  .time_start, .time_end {
+    height: 30px !important;
+  }
+}
+
+.current__pictures {
+  margin-top: 15px;
+
+  .current__pictures-div {
+    margin-top: 10px;
+  }
+}
+
+.delete__picture-form {
+  .delete__picture-btn {
+    background-color: whitesmoke;
+    border: 0;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    color: #ec6f75;
+    position: absolute;
+    top: -8px;
+    right: 7px;
+    margin: 0;
+    padding: 0;
+    line-height: 20px;
   }
 }
