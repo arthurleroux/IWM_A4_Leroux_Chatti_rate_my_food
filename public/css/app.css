@@ -8505,9 +8505,6 @@ button.close {
   background-color: transparent;
   border: none;
 }
-.caret {
-  border-color: transparent !important;
-}
 
 .pagination li.disabled span {
   background-color: transparent;
@@ -8521,5 +8518,9 @@ button.close {
   height: 30px;
   color: #fff;
   line-height: 30px;
+}
+
+.caret {
+  border-color: transparent !important;
 }
 
