@@ -37,7 +37,7 @@ class RestaurantController extends Controller
      */
     public function index()
     {
-        $restaurants = Restaurant::take(10)->get();
+        $restaurants = Restaurant::paginate(6);
         return view('restaurant.index', compact('restaurants'));
     }
 

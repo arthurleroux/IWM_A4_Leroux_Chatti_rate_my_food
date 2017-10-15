@@ -8401,9 +8401,44 @@ button.close {
   outline: none;
 }
 
+.restaurant__cards-link {
+  text-decoration: none;
+  color: grey;
+}
+
+.restaurant__cards-link:hover {
+  color: grey;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.card {
+  position: relative;
+  height: 500px;
+}
+
+.card .card-image {
+  height: 50%;
+}
+
+.card .card-image img {
+  height: 100%;
+  width: auto;
+}
+
+.card .card__link {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+  background-color: #ec6f75;
+  color: white;
+  line-height: 50px;
+}
+
 .slider_class {
   position: relative;
-  height: 45vh;
+  height: 50vh;
 }
 
 .swiper-container {
@@ -8426,5 +8461,24 @@ button.close {
   top: 50%;
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
+}
+
+.pagination li a {
+  background-color: transparent;
+  border: none;
+}
+
+.pagination li.disabled span {
+  background-color: transparent;
+  border: none;
+}
+
+.pagination li.active {
+  background-color: #2ecc71;
+  border-radius: 100%;
+  width: 30px;
+  height: 30px;
+  color: #fff;
+  line-height: 30px;
 }
 

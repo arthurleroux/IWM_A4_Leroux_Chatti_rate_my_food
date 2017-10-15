@@ -1,0 +1,22 @@
+.pagination li {
+  a {
+    background-color: transparent;
+    border: none;
+  }
+
+  &.disabled {
+    span {
+      background-color: transparent;
+      border: none;
+    }
+  }
+
+  &.active{
+    background-color: #2ecc71;
+    border-radius: 100%;
+    width: 30px;
+    height: 30px;
+    color: #fff;
+    line-height: 30px;
+  }
+}

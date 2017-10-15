@@ -45,3 +45,39 @@
     outline: none;
   }
 }
+
+.restaurant__cards-link {
+  text-decoration: none;
+  color: grey;
+
+  &:hover
+  {
+    color: grey;
+    text-decoration:none;
+    cursor:pointer;
+  }
+}
+
+.card {
+  position: relative;
+  height: 500px;
+
+  .card-image {
+    height: 50%;
+
+    img {
+      height: 100%;
+      width: auto;
+    }
+  }
+
+  .card__link {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    background-color: #ec6f75;
+    color: white;
+    line-height: 50px;
+  }
+}
