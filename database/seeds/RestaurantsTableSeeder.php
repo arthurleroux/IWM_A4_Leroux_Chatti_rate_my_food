@@ -22,12 +22,12 @@ class RestaurantsTableSeeder extends Seeder
             array_push($users_id, $user->id);
         }
 
-        for($i = 1; $i <= 5; $i++){
+        for($i = 1; $i <= 20; $i++){
             Restaurant::create([
                 'user_id' => $faker->randomElement($users_id),
                 'name' => $faker->company,
                 'description' => $faker->text($maxNbChars = 200),
-                'status' => "pending",
+                'status' => $faker->randomElement(['pending', 'accepted', 'rejected']),
                 'address' => $faker->address,
                 'city' => $faker->city,
                 'zip_code' => "92000",

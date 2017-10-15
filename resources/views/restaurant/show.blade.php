@@ -20,12 +20,13 @@
                 <div class="panel-body">
 
                     @if(count($restaurant->reviews) > 0)
-                        @foreach($restaurant->reviews as $review)
+                        @foreach($restaurant->reviews->where('status', 'accepted') as $review)
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <div class="row">
                                         <div class="col-md-5">
                                             De {{ $review->user->name }}
+                                            {{ $review->status }}
                                         </div>
                                         <div class="col-md-5">
                                             {{ $review->updated_at }}

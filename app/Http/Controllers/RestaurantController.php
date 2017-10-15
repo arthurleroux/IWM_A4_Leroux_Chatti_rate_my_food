@@ -283,6 +283,25 @@ class RestaurantController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $restaurant = Restaurant::findOrFail($id);
+        $restaurant->delete();
+
+        Flashy::success('Restaurant supprimé');
+        return redirect()->back();
+    }
+
+    public function moderation() {
+
+        return view('restaurant.moderation');
+    }
+
+    public function changeStatus(Request $request, $id) {
+
+        $restaurant = Restaurant::findOrFail($id);
+        $restaurant->status = $request->status;
+        $restaurant->save();
+
+        Flashy::success('Statut changé avec succès');
+        return redirect()->back();
     }
 }
