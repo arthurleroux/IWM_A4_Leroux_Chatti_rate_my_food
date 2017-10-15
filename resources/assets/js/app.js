@@ -101,4 +101,6 @@ $(document).ready(function () {
         'scrollDefault': '18:00',
         'timeFormat': 'H:i'
     });
+
+    $('select').material_select();
 });

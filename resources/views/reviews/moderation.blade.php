@@ -17,7 +17,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <div class="row">
-                                <div class="col-md-5">
+                                <div class="col-md-4">
                                     <b>Restaurant : </b><a href="{{ route('restaurant.show', $review->restaurant_id) }}">{{ $review->restaurant->name }}</a>
                                 </div>
                                 <div class="col-md-4">
@@ -38,7 +38,7 @@
 
                                     {!! Form::close() !!}
                                 </div>
-                                <div class="col-md-1">
+                                <div class="col-md-2">
                                     {!! Form::model($review,
                                         array(
                                             'route' => array('reviews.destroy', $review->id),
@@ -75,7 +75,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <div class="row">
-                                <div class="col-md-5">
+                                <div class="col-md-4">
                                     <b>Restaurant : </b>{{ $review->restaurant->name }}
                                 </div>
                                 <div class="col-md-4">
@@ -96,7 +96,7 @@
 
                                     {!! Form::close() !!}
                                 </div>
-                                <div class="col-md-1">
+                                <div class="col-md-2">
                                     {!! Form::model($review,
                                         array(
                                             'route' => array('reviews.destroy', $review->id),

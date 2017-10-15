@@ -8428,3 +8428,7 @@ button.close {
           transform: translate(-50%, -50%);
 }
 
+.caret {
+  border-color: transparent !important;
+}
+

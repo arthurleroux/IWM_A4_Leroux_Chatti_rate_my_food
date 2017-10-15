@@ -17,7 +17,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <div class="row">
-                                <div class="col-md-5">
+                                <div class="col-md-4">
                                     <b>Restaurant : </b>{{ $restaurant->name }}
                                 </div>
                                 <div class="col-md-4">
@@ -38,7 +38,7 @@
 
                                     {!! Form::close() !!}
                                 </div>
-                                <div class="col-md-1">
+                                <div class="col-md-2">
                                     {!! Form::model($restaurant,
                                         array(
                                             'route' => array('restaurant.destroy', $restaurant->id),
@@ -74,7 +74,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <div class="row">
-                                <div class="col-md-5">
+                                <div class="col-md-4">
                                     <b>Restaurant : </b>{{ $restaurant->name }}
                                 </div>
                                 <div class="col-md-4">
@@ -95,7 +95,7 @@
 
                                     {!! Form::close() !!}
                                 </div>
-                                <div class="col-md-1">
+                                <div class="col-md-2">
                                     {!! Form::model($restaurant,
                                         array(
                                             'route' => array('restaurant.destroy', $restaurant->id),
