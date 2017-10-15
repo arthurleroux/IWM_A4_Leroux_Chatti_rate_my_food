@@ -3,74 +3,53 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col s12">
                 <h4>
                     {{ $restaurant->name }}
                 </h4>
             </div>
 
-            <div class="col s4">
-                <p>
-                    {{ $restaurant->description }}
-                </p>
+            <div class="col s12">
+                <b>Note : </b>
+                @for ($i = 1; $i < 6; $i++)
+                    <i class="fa fa-star" style="{{ $restaurant->average_rate >= $i ? 'color:#ec6f75;' : ''}}" aria-hidden="true"></i>
+                @endfor
+                -
+                <b>Prix : </b>
+                @for ($i = 1; $i < 6; $i++)
+                    <i class="fa fa-eur" style="{{ $restaurant->average_price >= $i ? 'color:#ec6f75;' : ''}}" aria-hidden="true"></i>
+                @endfor
             </div>
-            <div class="col s8">
+            <div class="col s12">
+                <i class="fa fa-map-marker" aria-hidden="true"></i> {{$restaurant->address }}, {{$restaurant->city }} {{$restaurant->zip_code }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s12">
                 <!-- Slider main container -->
                 @include('restaurant.partials.slider')
             </div>
         </div>
+
         <div class="row">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Avis
+            <div class="col s12">
+                <ul class="tabs">
+                    <li class="tab col s3"><a href="#infos">Informations</a></li>
+                    <li class="tab col s3"><a href="#reviews">Avis</a></li>
+                </ul>
+            </div>
+            <div id="infos" class="col s12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <p>
+                            <b>Description : </b>{{ $restaurant->description }}
+                        </p>
+                    </div>
                 </div>
-                <div class="panel-body">
-
-                    @if(count($restaurant->reviews) > 0)
-                        @foreach($restaurant->reviews as $review)
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <div class="row">
-                                        <div class="col-md-5">
-                                            De {{ $review->user->name }}
-                                        </div>
-                                        <div class="col-md-5">
-                                            {{ $review->updated_at }}
-                                        </div>
-                                        @if(Auth::check() && (Auth::user()->is_admin === 1) || Auth::check() && (Auth::user()->id ===
-                                        $review->user_id))
-                                            <div class="col-md-1">
-                                                <a href="{{ route('reviews.edit', $review->id) }}">
-                                                    <button class="btn btn-default">
-                                                        <i class="fa fa-pencil" aria-hidden="true"></i>
-                                                    </button>
-                                                </a>
-                                            </div>
-                                            <div class="col-md-1">
-                                                {!! Form::model($review,
-                                                    array(
-                                                        'route' => array('reviews.destroy', $review->id),
-                                                        'method' => 'DELETE'))
-                                                !!}
-                                                <button class="btn btn-danger" type="submit">
-                                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                                </button>
-                                                {!! Form::close() !!}
-                                            </div>
-                                        @endif
-                                    </div>
-                                </div>
-                                @include('reviews.show')
-                            </div>
-                        @endforeach
-                    @else
-                        <p>Ce restaurant n'a aucune notes</p>
-                    @endif
-
-                    @if(Auth::check())
-                        @include('reviews.create')
-                    @endif
-                </div>
+            </div>
+            <div id="reviews" class="col s12">
+                @include('restaurant.partials.reviews')
             </div>
         </div>
     </div>
