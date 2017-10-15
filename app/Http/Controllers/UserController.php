@@ -66,7 +66,10 @@ class UserController extends Controller
                 ['status', 'accepted']
         ])->get();
         if ($user->is_restaurant == 1) {
-            $restaurants = Restaurant::where('user_id', $user->id)->get();
+            $restaurants = Restaurant::where([
+                ['user_id', $user->id],
+                ['status', 'accepted']
+            ])->get();
             return view('users.show', compact('user', 'reviews', 'restaurants'));
         }
         else {
