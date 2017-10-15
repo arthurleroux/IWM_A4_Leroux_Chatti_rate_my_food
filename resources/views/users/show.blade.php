@@ -132,7 +132,7 @@
                                                 </a>
                                             </div>
                                             <div class="col-sm-2">
-                                                {!! Form::model($review,
+                                                {!! Form::model($restaurant,
                                                     array(
                                                         'route' => array('restaurant.destroy', $restaurant->id),
                                                         'method' => 'DELETE',
@@ -143,12 +143,6 @@
                                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                                 </button>
                                                 {!! Form::close() !!}
-
-                                                <script>
-                                                    $(".delete").on("submit", function(){
-                                                        return confirm("Voulez-vous vraiment supprimer ce restaurant ?");
-                                                    });
-                                                </script>
                                             </div>
                                         </div>
                                     </div>

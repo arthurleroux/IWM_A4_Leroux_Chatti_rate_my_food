@@ -18,6 +18,11 @@
             <!-- Left Side Of Navbar -->
             <ul class="nav navbar-nav">
 &nbsp;              <li><a href="{{ route('restaurant.index') }}">Restaurants</a></li>
+                @if(Auth::check())
+                    @if(Auth::user()->is_admin === 1 || Auth::user()->is_restaurant === 1)
+                        <li><a href="{{ route('restaurant.index') }}">Ajouter un restaurant</a></li>
+                    @endif
+                @endif
             </ul>
 
             <!-- Right Side Of Navbar -->

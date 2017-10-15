@@ -17,6 +17,7 @@ class RestaurantController extends Controller
 {
 
     public function __construct() {
+        $this->middleware('auth')->only('create', 'store', 'edit', 'update', 'changeStatus', 'moderation');
         $this->middleware('isAdmin')->only('changeStatus', 'moderation');
         $this->middleware('editRestaurant')->only('edit', 'update');
         $this->middleware('isRestaurant')->only('create', 'store');
@@ -338,7 +339,7 @@ class RestaurantController extends Controller
         $restaurant->delete();
 
         Flashy::success('Restaurant supprimé');
-        return redirect()->back();
+        return redirect()->route('restaurant.index');
     }
 
     public function moderation() {

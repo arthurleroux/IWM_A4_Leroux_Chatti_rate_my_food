@@ -46,11 +46,18 @@ $(document).ready(function () {
             var reader = new FileReader();
 
             reader.onload = function (e) {
-                console.log(input.files[0]);
-                console.log(e);
 
                 const id = $('#restaurant_id').data( "restaurant_id" );
-                console.log(id);
+                console.log(e.originalTarget.result);
+
+                let result;
+
+                if(e.srcElement == undefined) {
+                    result =  e.originalTarget.result;
+                } else {
+                    result = e.srcElement.result;
+                }
+
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -58,7 +65,7 @@ $(document).ready(function () {
                     url: '/restaurant/add_picture/' + id,
                     type: "POST",
                     data: {
-                        image: e.srcElement.result
+                        image: result
                     }
                 }).done(function(data) {
                     console.log(data);

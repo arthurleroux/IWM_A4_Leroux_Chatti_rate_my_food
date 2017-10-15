@@ -45,6 +45,34 @@
                         <p>
                             <b>Description : </b>{{ $restaurant->description }}
                         </p>
+
+                        @if(Auth::check())
+                            @if(Auth::user()->is_admin === 1 || Auth::user()->id == $restaurant->id)
+                                <div class="row">
+                                    <div class="col-sm-8"></div>
+                                    <div class="col-sm-2">
+                                        <a href="{{ route('restaurant.edit', $restaurant->id) }}">
+                                            <button class="btn btn-default">
+                                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                                            </button>
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        {!! Form::model($restaurant,
+                                            array(
+                                                'route' => array('restaurant.destroy', $restaurant->id),
+                                                'method' => 'DELETE',
+                                                'class' => 'delete'
+                                            )
+                                        ) !!}
+                                        <button class="btn btn-danger" type="submit">
+                                            <i class="fa fa-trash" aria-hidden="true"></i>
+                                        </button>
+                                        {!! Form::close() !!}
+                                    </div>
+                                </div>
+                            @endif
+                        @endif
                     </div>
                 </div>
             </div>
