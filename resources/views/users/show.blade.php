@@ -120,7 +120,37 @@
                             @foreach($restaurants as $restaurant)
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        <a href="{{ route('restaurant.show', $restaurant->id) }}">{{ $restaurant->name }}</a>
+                                        <div class="row">
+                                            <div class="col-sm-8">
+                                                <a href="{{ route('restaurant.show', $restaurant->id) }}">{{ $restaurant->name }}</a>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <a href="{{ route('restaurant.edit', $restaurant->id) }}">
+                                                    <button class="btn btn-default">
+                                                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                                                    </button>
+                                                </a>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                {!! Form::model($review,
+                                                    array(
+                                                        'route' => array('restaurant.destroy', $restaurant->id),
+                                                        'method' => 'DELETE',
+                                                        'class' => 'delete'
+                                                    )
+                                                ) !!}
+                                                <button class="btn btn-danger" type="submit">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </button>
+                                                {!! Form::close() !!}
+
+                                                <script>
+                                                    $(".delete").on("submit", function(){
+                                                        return confirm("Voulez-vous vraiment supprimer ce restaurant ?");
+                                                    });
+                                                </script>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="panel-body">
                                         {{ $restaurant->description }}
