@@ -10,7 +10,7 @@
             </button>
             <!-- Branding Image -->
             <a class="navbar-brand" href="{{ url('/') }}">
-                {{ config('app.name', 'Laravel') }}
+                Rate My Food
             </a>
         </div>
 
