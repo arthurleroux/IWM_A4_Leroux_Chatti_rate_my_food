@@ -14,8 +14,8 @@ class UserController extends Controller
 
     public function __construct() {
 
-//        $this->middleware('isAdmin')->only('index', 'changeRights');
-//        $this->middleware('hasRights')->only('show', 'edit', 'update', 'destroy', 'editPassword');
+        $this->middleware('isAdmin')->only('index', 'changeRights', 'admin');
+        $this->middleware('hasRights')->only('show', 'edit', 'update', 'destroy', 'editPassword');
 
     }
 

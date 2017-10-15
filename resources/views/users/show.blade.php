@@ -35,7 +35,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-md-4 control-label">Type de compte*</label>
+                                <label class="col-md-4 control-label">Droits*</label>
                                 <div class="col-md-5">
                                     <input type="text" class="form-control" readonly value="{{ ($user->is_admin ? 'Administrateur' : 'Classique') }}">
                                 </div>
@@ -59,6 +59,8 @@
 
                         {!! Form::close() !!}
 
+                        <br>
+
                         @if(Auth::user()->is_admin === 1)
                         <a href="{{ route('users.index') }}">Retourner sur la liste des utilisateurs</a>
                         @endif
@@ -75,21 +77,21 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <div class="row">
-                                            <div class="col-md-5">
+                                            <div class="col-md-4">
                                                 Restaurant : <a href="{{ route('restaurant.show', $review->restaurant->id) }}">{{ $review->restaurant->name }}</a>
                                             </div>
-                                            <div class="col-md-5">
+                                            <div class="col-md-4">
                                                 {{ $review->updated_at }}
                                             </div>
                                             @if(Auth::check() && (Auth::user()->is_admin === 1) || (Auth::user()->id === $review->user_id))
-                                                <div class="col-md-1">
+                                                <div class="col-md-2">
                                                     <a href="{{ route('reviews.edit', $review->id) }}">
                                                         <button class="btn btn-default">
                                                             <i class="fa fa-pencil" aria-hidden="true"></i>
                                                         </button>
                                                     </a>
                                                 </div>
-                                                <div class="col-md-1">
+                                                <div class="col-md-2">
                                                     {!! Form::model($review,
                                                         array(
                                                             'route' => array('reviews.destroy', $review->id),
@@ -121,7 +123,7 @@
                                         <a href="{{ route('restaurant.show', $restaurant->id) }}">{{ $restaurant->name }}</a>
                                     </div>
                                     <div class="panel-body">
-
+                                        {{ $restaurant->description }}
                                     </div>
                                 </div>
                             @endforeach
