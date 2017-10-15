@@ -65,12 +65,12 @@
                     </div>
                 </div>
 
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        Mes commentaires
-                    </div>
-                    <div class="panel-body">
-                        @if(count($user->reviews) > 0)
+                @if(count($user->reviews->where('status', 'accepted')) > 0)
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Mes commentaires
+                        </div>
+                        <div class="panel-body">
                             @foreach($reviews as $review)
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
@@ -106,11 +106,10 @@
                                     @include('reviews.show')
                                 </div>
                             @endforeach
-                        @endif
+                        </div>
                     </div>
-                </div>
-
-                @if($user->is_restaurant && count($user->restaurants) > 0)
+                @endif
+                @if($user->is_restaurant && count($user->restaurants->where('status', 'accepted')) > 0)
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             Mes restaurants
