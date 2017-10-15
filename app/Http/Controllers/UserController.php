@@ -14,8 +14,8 @@ class UserController extends Controller
 
     public function __construct() {
 
-//        $this->middleware('isAdmin')->only('index', 'changeRights');
-//        $this->middleware('hasRights')->only('show', 'edit', 'update', 'destroy', 'editPassword');
+        $this->middleware('isAdmin')->only('index', 'changeRights', 'admin');
+        $this->middleware('hasRights')->only('show', 'edit', 'update', 'destroy', 'editPassword');
 
     }
 
@@ -153,7 +153,10 @@ class UserController extends Controller
         $reviews_pending = Review::where('status', 'pending')->get();
         $reviews_rejected = Review::where('status', 'rejected')->get();
 
-        return view('users.admin', compact('reviews_pending', 'reviews_rejected'));
+        $restaurant_pending = Restaurant::where('status', 'pending')->get();
+        $restaurant_rejected = Restaurant::where('status', 'rejected')->get();
+
+        return view('users.admin', compact('reviews_pending', 'reviews_rejected', 'restaurant_pending', 'restaurant_rejected'));
     }
 
 }

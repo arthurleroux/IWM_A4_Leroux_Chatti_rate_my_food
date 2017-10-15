@@ -17,6 +17,7 @@ class RestaurantController extends Controller
 {
 
     public function __construct() {
+        $this->middleware('isAdmin')->only('changeStatus', 'moderation');
         $this->middleware('editRestaurant')->only('edit', 'update');
         $this->middleware('isRestaurant')->only('create', 'store');
     }
@@ -25,10 +26,6 @@ class RestaurantController extends Controller
      *
      * @return void
      */
-//    public function __construct()
-//    {
-//        $this->middleware('auth');
-//    }
 
     /**
      * Display a listing of the resource.
@@ -337,6 +334,25 @@ class RestaurantController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $restaurant = Restaurant::findOrFail($id);
+        $restaurant->delete();
+
+        Flashy::success('Restaurant supprimé');
+        return redirect()->back();
+    }
+
+    public function moderation() {
+
+        return view('restaurant.moderation');
+    }
+
+    public function changeStatus(Request $request, $id) {
+
+        $restaurant = Restaurant::findOrFail($id);
+        $restaurant->status = $request->status;
+        $restaurant->save();
+
+        Flashy::success('Statut changé avec succès');
+        return redirect()->back();
     }
 }

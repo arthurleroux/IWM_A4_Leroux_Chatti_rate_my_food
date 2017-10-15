@@ -10,6 +10,13 @@ use MercurySeries\Flashy\Flashy;
 
 class ReviewController extends Controller
 {
+
+    public function __construct() {
+
+        $this->middleware('isAdmin')->only('changeStatus', 'moderation');
+
+    }
+
     /**
      * Display a listing of the resource.
      *

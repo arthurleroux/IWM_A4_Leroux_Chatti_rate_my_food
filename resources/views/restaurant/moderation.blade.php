@@ -1,16 +1,16 @@
 <div class="container">
     <div class="panel panel-default">
-        <a data-toggle="collapse" href="#reviews_pending" aria-expanded="false" aria-controls="reviews_pending">
+        <a data-toggle="collapse" href="#restaurant_pening" aria-expanded="false" aria-controls="restaurant_pening">
             <div class="panel-heading">
-                Avis en attente ({{ count($reviews_pending) }})
+                Restaurants en attente ({{ count($restaurant_pending) }})
             </div>
         </a>
-        <div class="collapse" id="reviews_pending">
+        <div class="collapse" id="restaurant_pening">
             <div class="panel-body">
                 @php
                 $i = 0
                 @endphp
-                @foreach($reviews_pending as $review)
+                @foreach($restaurant_pending as $restaurant)
                     @php
                     $i++
                     @endphp
@@ -18,15 +18,15 @@
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <b>Restaurant : </b><a href="{{ route('restaurant.show', $review->restaurant_id) }}">{{ $review->restaurant->name }}</a>
+                                    <b>Restaurant : </b>{{ $restaurant->name }}
                                 </div>
                                 <div class="col-md-4">
-                                    <b>Auteur : </b><a href="{{ route('users.show', $review->user_id) }}">{{ $review->user->name }}</a>
+                                    <b>Propriétaire : </b><a href="{{ route('users.show', $restaurant->user_id) }}">{{ $restaurant->user->name }}</a>
                                 </div>
                                 <div class="col-md-2">
-                                    {!! Form::model($review,
+                                    {!! Form::model($restaurant,
                                         array(
-                                            'route' => array('reviews.change_status', $review->id),
+                                            'route' => array('restaurant.change_status', $restaurant->id),
                                             'method' => 'PUT')
                                         )
                                     !!}
@@ -39,9 +39,9 @@
                                     {!! Form::close() !!}
                                 </div>
                                 <div class="col-md-2">
-                                    {!! Form::model($review,
+                                    {!! Form::model($restaurant,
                                         array(
-                                            'route' => array('reviews.destroy', $review->id),
+                                            'route' => array('restaurant.destroy', $restaurant->id),
                                             'method' => 'DELETE'))
                                     !!}
                                     <button class="btn btn-danger" type="submit">
@@ -51,24 +51,23 @@
                                 </div>
                             </div>
                         </div>
-                        @include('reviews.show')
                     </div>
                 @endforeach
             </div>
         </div>
     </div>
     <div class="panel panel-default">
-        <a data-toggle="collapse" href="#reviews_rejected" aria-expanded="false" aria-controls="reviews_rejected">
+        <a data-toggle="collapse" href="#restaurant_rejected" aria-expanded="false" aria-controls="restaurant_rejected">
             <div class="panel-heading">
-                Avis rejetés ({{ count($reviews_rejected) }})
+                Restaurants rejetés ({{ count($restaurant_rejected) }})
             </div>
         </a>
-        <div class="collapse" id="reviews_rejected">
+        <div class="collapse" id="restaurant_rejected">
             <div class="panel-body">
                 @php
                 $i = 0
                 @endphp
-                @foreach($reviews_rejected as $review)
+                @foreach($restaurant_rejected as $restaurant)
                     @php
                     $i++
                     @endphp
@@ -76,15 +75,15 @@
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <b>Restaurant : </b>{{ $review->restaurant->name }}
+                                    <b>Restaurant : </b>{{ $restaurant->name }}
                                 </div>
                                 <div class="col-md-4">
-                                    <b>Auteur : </b>{{ $review->user->name }}
+                                    <b>Propriétaire : </b><a href="{{ route('users.show', $restaurant->user_id) }}">{{ $restaurant->user->name }}</a>
                                 </div>
                                 <div class="col-md-2">
-                                    {!! Form::model($review,
+                                    {!! Form::model($restaurant,
                                         array(
-                                            'route' => array('reviews.change_status', $review->id),
+                                            'route' => array('restaurant.change_status', $restaurant->id),
                                             'method' => 'PUT')
                                         )
                                     !!}
@@ -97,9 +96,9 @@
                                     {!! Form::close() !!}
                                 </div>
                                 <div class="col-md-2">
-                                    {!! Form::model($review,
+                                    {!! Form::model($restaurant,
                                         array(
-                                            'route' => array('reviews.destroy', $review->id),
+                                            'route' => array('restaurant.destroy', $restaurant->id),
                                             'method' => 'DELETE'))
                                     !!}
                                     <button class="btn btn-danger" type="submit">
@@ -109,7 +108,6 @@
                                 </div>
                             </div>
                         </div>
-                        @include('reviews.show')
                     </div>
                 @endforeach
             </div>

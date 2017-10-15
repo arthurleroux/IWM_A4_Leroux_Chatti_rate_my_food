@@ -8505,6 +8505,9 @@ button.close {
   background-color: transparent;
   border: none;
 }
+.caret {
+  border-color: transparent !important;
+}
 
 .pagination li.disabled span {
   background-color: transparent;
