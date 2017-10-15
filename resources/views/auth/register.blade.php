@@ -43,12 +43,12 @@
                             <label for="is-restorer" class="col-md-4 control-label">Je suis : </label>
 
                             <div class="col-md-6">
-                                <input type="radio" name="is_restorer" value="0" checked>
+                                <input type="radio" id="client" name="is_restorer" value="0" checked>
                                 <label for="client">Un client</label>
 
                                 <br>
 
-                                <input type="radio" name="is_restorer" value="1">
+                                <input type="radio" id="restorer" name="is_restorer" value="1">
                                 <label for="restorer">Un restaurateur</label>
 
                             </div>
