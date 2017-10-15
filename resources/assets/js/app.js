@@ -6,6 +6,7 @@
  */
 
 require('./bootstrap');
+require('./slider');
 
 window.Vue = require('vue');
 
@@ -45,16 +46,24 @@ $(document).ready(function () {
             var reader = new FileReader();
 
             reader.onload = function (e) {
-                console.log(input.files);
+                console.log(input.files[0]);
+                console.log(e);
 
+                const id = $('#restaurant_id').data( "restaurant_id" );
+                console.log(id);
                 $.ajax({
-                    url: "/restaurant/add_picture",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: '/restaurant/add_picture/' + id,
                     type: "POST",
-                    data: {title: 'title', body: 'body', published_at: 'published_at'}
-                }).done(function() {
-                    console.log('success');
+                    data: {
+                        image: e.srcElement.result
+                    }
+                }).done(function(data) {
+                    console.log(data);
                 }).fail(function() {
-                    alert( "error" );
+                    console.log( "error" );
                 });
 
                 $('.all__pictures').append('<div class="col-md-4"><img src="' + e.target.result + '" id="restaurant_img_tag" class="img-responsive"/></div>');
@@ -80,20 +89,6 @@ $(document).ready(function () {
         $droparea.removeClass('is-active');
     });
 
-// change inner text
-    $fileInput.on('change', function() {
-        var filesCount = $(this)[0].files.length;
-        var $textContainer = $(this).prev('.js-set-number');
-
-        if (filesCount === 1) {
-            // if single file then show file name
-            $textContainer.text($(this).val().split('\\').pop());
-        } else {
-            // otherwise show number of files
-            $textContainer.text(filesCount + ' files selected');
-        }
-    });
-
     // initialize input widgets first
     $('#opening__time .time_start').timepicker({
         'showDuration': true,
@@ -107,4 +102,5 @@ $(document).ready(function () {
         'timeFormat': 'H:i'
     });
 
+    $('select').material_select();
 });

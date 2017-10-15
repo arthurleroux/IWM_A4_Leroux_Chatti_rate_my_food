@@ -7,22 +7,28 @@ use App\Models\Opening_time;
 use App\Models\Picture;
 use App\Models\Restaurant;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
+use Intervention\Image\Facades\Image;
 use MercurySeries\Flashy\Flashy;
 
 class RestaurantController extends Controller
 {
+
+    public function __construct() {
+        $this->middleware('editRestaurant')->only('edit', 'update');
+        $this->middleware('isRestaurant')->only('create', 'store');
+    }
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+//    public function __construct()
+//    {
+//        $this->middleware('auth');
+//    }
 
     /**
      * Display a listing of the resource.
@@ -87,14 +93,10 @@ class RestaurantController extends Controller
 
         $restaurants = new Restaurant;
 
-        $restaurants->user_id = Auth::user()->id;
-        $restaurants->name = $request->name;
-        $restaurants->description = $request->description;
-        $restaurants->address = $request->address;
-        $restaurants->city = $request->city;
-        $restaurants->zip_code = $request->zip_code;
+        $input = $request->input();
+        $input['user_id'] = Auth::user()->id;
 
-        $restaurants->save();
+        $restaurants->fill($input)->save();
 
         if ($request->hasFile('restaurant_img')) {
             $picture = new Picture;
@@ -102,17 +104,21 @@ class RestaurantController extends Controller
             $image = $request->file('restaurant_img');
             $name = time().'.'.$image->getClientOriginalExtension();
             $destinationPath = public_path('/restaurants_pictures/'. $restaurants->name .'_'. $restaurants->id);
+
+            $path = '/restaurants_pictures/'. $restaurants->name .'_'. $restaurants->id .'/'.$name;
             $image->move($destinationPath, $name);
 
             $picture->restaurant_id = $restaurants->id;
-            $picture->path = $destinationPath;
+            $picture->path = $path;
 
             $picture->save();
         } else {
-            dd('error');
+            Flashy::success('Vous devez ajouter une photo à votre restaurant', 'http://your-awesome-link.com');
+            //dd('error');
         }
 
         Flashy::success('Restaurant ajouté avec succès', 'http://your-awesome-link.com');
+
         return redirect()->route('restaurant.index');
     }
 
@@ -124,7 +130,10 @@ class RestaurantController extends Controller
      */
     public function show($id)
     {
-        //
+        $restaurant = Restaurant::findOrFail($id);
+        $pictures = Picture::where('restaurant_id', $id)->get();
+
+        return view('restaurant.show', compact('restaurant', 'pictures'));
     }
 
     /**
@@ -137,61 +146,16 @@ class RestaurantController extends Controller
     {
         $restaurant = Restaurant::find($id);
         $days = Day::All();
+        $opening_days = Opening_time::where('restaurant_id', $id)->get();
+        $pictures = Picture::where('restaurant_id', $restaurant->id)->get();
 
-        return view('restaurant.edit', compact('restaurant', 'days'));
+        return view('restaurant.edit', compact('restaurant', 'days', 'pictures', 'opening_days'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function edit_opening_time($request, $id)
     {
-        //dd($request->all());
-        $messages = [
-            'name.require' => 'Le nom du restaurant est obligatoire',
-            'name.max' => 'Le nom est trop long',
-            'description.required' => 'La description du restaurant est obligatoire',
-            'description.max' => 'La desciption est trop longue',
-            'address.required' => 'L\'adresse est obligatoire',
-            'city.required' => 'La ville est obligatoire',
-            'zip_code.required' => 'Le code postal est obligatoire',
-        ];
-
-        $validator = Validator::make(
-            $request->all(),
-            [
-                'name' => 'required|max:255',
-                'description' => 'required|max:500',
-                'address' => 'required',
-                'city' => 'required',
-                'zip_code' => 'required',
-            ],
-            $messages
-        );
-
-        if ($validator->fails()) {
-            Flashy::error("Une erreur s'est produite", 'http://your-awesome-link.com');
-
-            return back()->withErrors($validator)->withInput();
-        }
-
-        $restaurants = new Restaurant;
-
-        $restaurants->user_id = Auth::user()->id;
-        $restaurants->name = $request->name;
-        $restaurants->description = $request->description;
-        $restaurants->address = $request->address;
-        $restaurants->city = $request->city;
-        $restaurants->zip_code = $request->zip_code;
-
-        $restaurants->save();
-
         $count = Opening_time::where('restaurant_id', $id)->count();
-        //dd($count);
+
         $times = [
             [
                 'restaurant_id' => $id,
@@ -245,10 +209,7 @@ class RestaurantController extends Controller
         ];
 
         if ($count > 0) {
-            //Opening_time::where('restaurant_id', $id)->update($times);
-
             foreach ($times as $time) {
-                // dd($time["day_id"]);
                 Opening_time::where('restaurant_id', $id)->where('day_id', $time['day_id'])->update($time);
             }
         } else {
@@ -256,6 +217,57 @@ class RestaurantController extends Controller
 
             $opening_time->insert($times);
         };
+
+        return true;
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $messages = [
+            'name.require' => 'Le nom du restaurant est obligatoire',
+            'name.max' => 'Le nom est trop long',
+            'description.required' => 'La description du restaurant est obligatoire',
+            'description.max' => 'La desciption est trop longue',
+            'address.required' => 'L\'adresse est obligatoire',
+            'city.required' => 'La ville est obligatoire',
+            'zip_code.required' => 'Le code postal est obligatoire',
+        ];
+
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'name' => 'required|max:255',
+                'description' => 'required|max:500',
+                'address' => 'required',
+                'city' => 'required',
+                'zip_code' => 'required',
+            ],
+            $messages
+        );
+
+        if ($validator->fails()) {
+            Flashy::error("Une erreur s'est produite", 'http://your-awesome-link.com');
+
+            return back()->withErrors($validator)->withInput();
+        }
+
+        $restaurants = Restaurant::find($id);
+
+        $input = $request->input();
+        $input['user_id'] = Auth::user()->id;
+
+        $restaurants->fill($input)->save();
+
+        $this->edit_opening_time($request, $restaurants->id);
+
+        Flashy::success('Modifications enregistrées avec succès', 'http://your-awesome-link.com');
 
         return redirect()->back();
     }
@@ -266,12 +278,44 @@ class RestaurantController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function add_picture(Request $request)
+    public function add_picture(Request $request, $id)
     {
-        $response = array(
-            'msg' => 'Setting created successfully'
-        );
-        return Response::json($response);
+        $restaurant = Restaurant::find($id);
+
+        //get the base-64 from data
+        $base64_str = substr($request->image, strpos($request->image, ",")+1);
+
+        //decode base64 string
+        $image = base64_decode($base64_str);
+        $picture_name = 'restaurant_' . $id . '_'.time().'.png';
+        $destinationPath = public_path('restaurants_pictures/' . $restaurant->name . '_' . $id);
+        $path = public_path('restaurants_pictures/' . $restaurant->name . '_' . $id . '/' . $picture_name);
+
+        if (File::isDirectory($destinationPath)){
+            Image::make($image)->save($path);
+        } else {
+            File::makeDirectory($destinationPath, 0777, true, true);
+            Image::make($image)->save($path);
+        }
+
+        $picture = new Picture;
+
+        $picture->restaurant_id = $restaurant->id;
+        $picture->path = 'restaurants_pictures/' . $restaurant->name . '_' . $id . '/' . $picture_name;
+
+        $picture->save();
+
+        if ($image){
+            return response()->json([
+                'status' => 200,
+                'response' => 'Photo enregistrée avec succès'
+            ]);
+        } else {
+            return response()->json([
+                'status' => 500,
+                'response' => 'Erreur lors de l\'enregistration de la photo'
+            ]);
+        }
     }
 
     /**
@@ -282,6 +326,25 @@ class RestaurantController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $restaurant = Restaurant::findOrFail($id);
+        $restaurant->delete();
+
+        Flashy::success('Restaurant supprimé');
+        return redirect()->back();
+    }
+
+    public function moderation() {
+
+        return view('restaurant.moderation');
+    }
+
+    public function changeStatus(Request $request, $id) {
+
+        $restaurant = Restaurant::findOrFail($id);
+        $restaurant->status = $request->status;
+        $restaurant->save();
+
+        Flashy::success('Statut changé avec succès');
+        return redirect()->back();
     }
 }

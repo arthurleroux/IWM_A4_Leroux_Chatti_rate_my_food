@@ -14,22 +14,28 @@ use App\Models\Restaurant;
 use App\Models\User;
 
 Route::get('/', function () {
-    $restaurants = Restaurant::take(10)->get();
+    $restaurants = Restaurant::all()->random(3);
     //dd($restaurants);
     return view('home', compact('restaurants'));
 });
 
-Route::post('/restaurant/add_picture', 'RestaurantController@add_picture')->name('add_picture');
 Route::get('/users/change_password/{id}', function($id) {
     $user = User::findOrFail($id);
     return view('users.change_password', compact('user'));
 })->name('change_password');
 
+Route::get('/admin', 'UserController@admin')->name('admin');
+Route::put('/reviews/change_status/{id}', 'ReviewController@changeStatus')->name('reviews.change_status');
+Route::put('/restaurant/change_status/{id}', 'RestaurantController@changeStatus')->name('restaurant.change_status');
+
 Route::put('/users/change_rights/{id}', 'UserController@changeRights')->name('change_rights');
 Route::put('/users/edit_password/{id}', 'UserController@editPassword')->name('edit_password');
 
+Route::post('/restaurant/add_picture/{id}', 'RestaurantController@add_picture')->name('add_picture');
+
 Route::resource('/restaurant', 'RestaurantController');
 Route::resource('/users', 'UserController');
+Route::resource('/reviews', 'ReviewController');
 
 Auth::routes();
 

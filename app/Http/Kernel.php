@@ -60,6 +60,7 @@ class Kernel extends HttpKernel
 
         'hasRights' => \App\Http\Middleware\hasRights::class,
         'isAdmin' => \App\Http\Middleware\isAdmin::class,
-        'isRestaurant' => \App\Http\Middleware\isRestaurant::class
+        'isRestaurant' => \App\Http\Middleware\isRestaurant::class,
+        'editRestaurant' => \App\Http\Middleware\editRestaurant::class,
     ];
 }

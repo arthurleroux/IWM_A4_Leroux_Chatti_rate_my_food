@@ -17,7 +17,7 @@ class isRestaurant
     public function handle($request, Closure $next)
     {
         if(Auth::check()
-            && Auth::user()->is_restaurant === 0) {
+            && Auth::user()->is_restaurant === 1) {
             return $next($request);
         }
 

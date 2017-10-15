@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Restaurant;
+use App\Models\Review;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -59,7 +61,18 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
-        return view('users.show', compact('user'));
+        $reviews = Review::where([
+                ['user_id', $user->id],
+                ['status', 'accepted']
+        ])->get();
+        if ($user->is_restaurant == 1) {
+            $restaurants = Restaurant::where('user_id', $user->id)->get();
+            return view('users.show', compact('user', 'reviews', 'restaurants'));
+        }
+        else {
+            return view('users.show', compact('user', 'reviews'));
+        }
+
     }
 
     /**
@@ -134,4 +147,16 @@ class UserController extends Controller
         Flashy::success('Modification du mot de passe effectuée');
         return view('users.show', compact('user'));
     }
+
+    public function admin() {
+
+        $reviews_pending = Review::where('status', 'pending')->get();
+        $reviews_rejected = Review::where('status', 'rejected')->get();
+
+        $restaurant_pending = Restaurant::where('status', 'pending')->get();
+        $restaurant_rejected = Restaurant::where('status', 'rejected')->get();
+
+        return view('users.admin', compact('reviews_pending', 'reviews_rejected', 'restaurant_pending', 'restaurant_rejected'));
+    }
+
 }

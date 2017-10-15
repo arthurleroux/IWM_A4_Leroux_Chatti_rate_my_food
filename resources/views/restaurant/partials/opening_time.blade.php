@@ -15,9 +15,9 @@
         </div>
 
         <p id="opening__time">
-            <input value="{{ $day->opening_days->first() ? $day->opening_days->first()->open_time : '9:00' }}" type="text" name="{{ $day->day }}_start_time"
+            <input value="{{ $opening_days[$day->id - 1] ? $opening_days[$day->id - 1]->open_time : '9:00' }}" type="text" name="{{ $day->day }}_start_time"
                    class="time_start" /> -
-            <input value="{{ $day->opening_days->first() ? $day->opening_days->first()->close_time : '18:00' }}" type="text" name="{{
+            <input value="{{ $opening_days[$day->id - 1] ? $opening_days[$day->id - 1]->close_time : '18:00' }}" type="text" name="{{
             $day->day }}_end_time" class="time_end" />
         </p>
 
