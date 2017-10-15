@@ -34,7 +34,7 @@ class RestaurantController extends Controller
      */
     public function index()
     {
-        $restaurants = Restaurant::paginate(6);
+        $restaurants = Restaurant::where('status', 'accepted')->paginate(6);
         return view('restaurant.index', compact('restaurants'));
     }
 
